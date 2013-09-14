@@ -1,6 +1,6 @@
 import Tkinter as tk
 
-class invtItem(): 
+class invItem(): 
     isUnique = False
     name = 'no name provided'
     description = 'no description provided'
@@ -26,10 +26,10 @@ class invtItem():
         for k,v in traitDict.items():
             self.traits[k] = v
     
-class product(invtItem):
+class product(invItem):
     def __init__(self, name='generic product',
                  description='no description provided'):
-        invtItem.__init__(self, name, description)
+        invItem.__init__(self, name, description)
         productTraits = {
             'marketValue':0, #estimated value of product
             'weight':0, #weight of product in kg
@@ -61,12 +61,31 @@ class gun(product):
         }
         self.updateTraitList(gunTraits)
 
-def buildNewGun(name,description,traits):
-    newGun = gun(name,description)
-    newGun.updateTraitList(traits)
-    return newGun
+class invItemFactory():
+    prodHistory = []
+    
+    def create(self, cls=invItem, name='no name provided',
+                 description='no description provided',unique=False,traitDict={}):
+        if not issubclass(cls,invItem):
+            raise TypeError('class provided is not subclass of inventory item')
+        iItem = cls(name,description)
+        iItem.isUnique = unique
+        iItem.updateTraitList(traitDict)
+        self.prodHistory.append(iItem)
+        return iItem
+    
+    def last(self,cls=invItem,back=0,name=None):
+        if not issubclass(cls,invItem):
+            raise TypeError('class provided is not subclass of inventory item')
+        retValue = self.prodHistory
+        retValue = [x for x in retValue if issubclass(cls,invItem)]
+        if name:
+            retValue = [x for x in retValue if x.name == name]
+        return self.prodHistory[len(self.prodHistory)-1-back]
 
-myGun = buildNewGun('AK-47','The universal boomstick',{'noise':0.75,'power':0.6, 'concealabilty':0.2})
+factory = invItemFactory()
+factory.create(gun,'AK-47','The universal boomstick',{'noise':0.75,'power':0.6, 'concealabilty':0.2})
+myGun = factory.last()
 print(myGun)
 print(myGun.name)
 print(myGun.description)
