@@ -3,6 +3,12 @@ from inventoryItem import invItem
 class invItemFactory():
     prodHistory = []
     
+    def getProdHistory(self):
+        return self.prodHistory
+
+    def clearProdHistory(self):
+        self.prodHistory = []
+    
     def create(self, cls=invItem, name='no name provided',
                  description='no description provided',unique=False,traitDict={}):
         if not issubclass(cls,invItem):
