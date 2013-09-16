@@ -2,6 +2,7 @@ from inventoryItem import invItem
 
 class invItemFactory():
     prodHistory = []
+    subscribers = []
     
     def getProdHistory(self):
         return self.prodHistory
@@ -27,3 +28,13 @@ class invItemFactory():
         if name:
             retValue = [x for x in retValue if x.name == name]
         return self.prodHistory[len(self.prodHistory)-1-back]
+
+    def addSubscriber(this,subs):
+        this.subscribers.append(subs)
+
+    def removeSubscriber(this,subs):
+        this.subscribers.remove(subs)
+
+    def notifySubscribers(self):
+        for s in subscribers:
+            s.updateInvItemFactory()
