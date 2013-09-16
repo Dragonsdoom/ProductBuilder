@@ -1,34 +1,27 @@
-class character(): 
-    isUnique = False
-    name = 'no name provided'
-    description = 'no description provided'
-    traits = {
-        'happiness':0.5,
-        'assertiveness':0.5,
-        'wealthiness':0.5,
-        'patience':0.5,
-        'marketknowledge':0,
-        'insiderknowledge':0,
-        'violence':0,
-        'toughness':0.5
-    }
+from traitObject import traitObject as tO
 
+class character(tO):
     def __init__(self,
                  name='no name provided',
                  description='no description provided'):
-        self.setName(name)
-        self.setDescription(description)
+        tO.__init__(name,description)
+        charTraits = {
+                'happiness':0.5,
+                'assertiveness':0.5,
+                'patience':0.5,
+                'violence':0,
+                'toughness':0.5
+            }
+        self.updateTraitList(charTraits)
 
-    def setUnique(self,isUnique):
-        self.isUnique = isUnique
-    def setName(self,name):
-        self.name = name
-    def setDescription(self,desc):
-        self.description = desc
-
-    def getTraits(self):
-        return traits
-        
-    def updateTraitList(self,traitDict):
-        for k,v in traitDict.items():
-            self.traits[k] = v
+class customer(character):
+    def __init__(self,
+                 name='no name provided',
+                 description='no description provided'):
+        character.__init__(name,description)
+        custTraits = {
+                'wealthiness':0.5,
+                'marketknowledge':0,
+                'insiderknowledge':0,
+            }
+        self.updateTraitList(charTraits)
