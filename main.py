@@ -1,5 +1,5 @@
-import inventoryItemController as iiController
-import inventoryItemFactory as iiFactory
+from inventoryItemController import invItemController as iiController
+from inventoryItemFactory import invItemFactory as iiFactory
 
 def main():
     controller = iiController(iiFactory())

@@ -1,6 +1,7 @@
 from dataStorage import dataStorageCPickle as dstorage
 from inventoryItem import gun
 from inventoryItemFactory import invItemFactory
+from inventoryItemView import invItemView
 
 class invItemController():
     ds = dstorage()
