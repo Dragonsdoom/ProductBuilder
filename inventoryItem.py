@@ -1,37 +1,19 @@
-import Tkinter as tk
+from traitObject import traitObject as tO
 
-class invItem(): 
-    isUnique = False
-    name = 'no name provided'
-    description = 'no description provided'
-    traits = {}
-
-    def __init__(self,
-                 name='no name provided',
+class invItem(tO): 
+    def __init__(self, name='generic product',
                  description='no description provided'):
-        self.setName(name)
-        self.setDescription(description)
-
-    def setUnique(self,isUnique):
-        self.isUnique = isUnique
-    def setName(self,name):
-        self.name = name
-    def setDescription(self,desc):
-        self.description = desc
-
-    def getTraits(self):
-        return traits
-        
-    def updateTraitList(self,traitDict):
-        for k,v in traitDict.items():
-            self.traits[k] = v
+        tO.__init__(self, name, description)
+        invItemTraits = {
+            'marketValue':0, #estimated value of invItem
+        }
+        self.updateTraitList(invItemTraits)
     
 class product(invItem):
     def __init__(self, name='generic product',
                  description='no description provided'):
         invItem.__init__(self, name, description)
         productTraits = {
-            'marketValue':0, #estimated value of product
             'weight':0, #weight of product in kg
             'rarity':0, #rarity of product
             'features':0 #amount of special features
