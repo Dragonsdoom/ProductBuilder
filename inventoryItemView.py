@@ -48,6 +48,27 @@ class invItemView():
 
         self.iItemClearButton = ttk.Button(self.iItemCreatedLabelFrame,text='Clear', command=None)
         self.iItemClearButton.grid(row=7, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+
+        self.iItemDescLabelFrame = ttk.LabelFrame(self.root,text="Description")
+        self.iItemDescLabelFrame.grid(row=1, column=1, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+
+        self.iItemDescEntry = tk.Text(self.iItemDescLabelFrame)
+        self.iItemDescEntry.pack(fill=tk.BOTH, expand=1)
+
+        self.iItemTraitLabelFrame = ttk.LabelFrame(self.root,text="Traits")
+        self.iItemTraitLabelFrame.grid(row=2, column=1, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+
+        self.iItemTraitScrollbar = ttk.Scrollbar(self.iItemTraitLabelFrame,orient=tk.HORIZONTAL)
+        self.iItemTraitScrollbar.grid(row=0, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+
+        self.iItemOptionLabelFrame = ttk.LabelFrame(self.root,text="Options")
+        self.iItemOptionLabelFrame.grid(row=3, column=1, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+
+        self.iItemOptionCbox = ttk.Checkbutton(self.iItemOptionLabelFrame)
+        self.iItemOptionCbox.pack(side=tk.LEFT)
+
+        self.iItemOptionLabel = ttk.Label(self.iItemOptionLabelFrame,text="Option 1")
+        self.iItemOptionLabel.pack(side=tk.LEFT)
         
     def mainLoop(self):
         tk.mainloop()
