@@ -20,8 +20,8 @@ class invItemView():
         self.iItemTypeLabelFrame = ttk.LabelFrame(self.root,text="Product")
         self.iItemTypeLabelFrame.grid(row=0, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        typeOption = tk.StringVar(self.root)
-        self.iItemTypeOptionMenu = ttk.OptionMenu(self.iItemTypeLabelFrame,typeOption, 'iItem','product','gun')
+        self.type_option = tk.StringVar(self.root)
+        self.iItemTypeOptionMenu = ttk.OptionMenu(self.iItemTypeLabelFrame,self.type_option,'iItem','product','gun')
         self.iItemTypeOptionMenu.pack(expand=1,fill=tk.BOTH)
 
         self.iItemCreatedLabelFrame = ttk.LabelFrame(self.root,text='Inventory Items Created')
@@ -34,19 +34,19 @@ class invItemView():
         self.iItemAddEntry = ttk.Entry(self.iItemCreatedLabelFrame)
         self.iItemAddEntry.grid(row=2, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        self.iItemAddButton = ttk.Button(self.iItemCreatedLabelFrame,text='Add', command=None)
+        self.iItemAddButton = ttk.Button(self.iItemCreatedLabelFrame,text='Add', command=self.create_iitem)
         self.iItemAddButton.grid(row=3, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        self.iItemDeleteButton = ttk.Button(self.iItemCreatedLabelFrame,text='Delete', command=None)
+        self.iItemDeleteButton = ttk.Button(self.iItemCreatedLabelFrame,text='Delete', command=self.delete_iitem)
         self.iItemDeleteButton.grid(row=4, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
         self.iItemLoadButton = ttk.Button(self.iItemCreatedLabelFrame,text='Load', command=None)
-        self.iItemAddButton.grid(row=5, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+        self.iItemLoadButton.grid(row=5, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
         self.iItemSaveButton = ttk.Button(self.iItemCreatedLabelFrame,text='Save', command=None)
-        self.iItemDeleteButton.grid(row=6, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+        self.iItemSaveButton.grid(row=6, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        self.iItemClearButton = ttk.Button(self.iItemCreatedLabelFrame,text='Clear', command=None)
+        self.iItemClearButton = ttk.Button(self.iItemCreatedLabelFrame,text='Clear', command=self.clear_iitems)
         self.iItemClearButton.grid(row=7, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
         self.iItemDescLabelFrame = ttk.LabelFrame(self.root,text="Description")
@@ -75,3 +75,35 @@ class invItemView():
 
     def loadLastIItem(self):
         self.iItemNameLabel['text'] = self.controller.getInvItemsCreated()[0].name
+
+    def create_iitem(self):
+        name = self.iItemAddEntry.get()
+        self.iItemAddEntry.delete(0,tk.END)
+        if name:
+            self.update_name(name)
+            iitem = self.type_option.get()
+            #Make an iitem?
+
+    def delete_iitem(self):
+        if self.iItemCreatedListBox.size() > 1:
+            index = self.iItemCreatedListBox.index(tk.ACTIVE)-1
+            self.iItemCreatedListBox.delete(tk.ACTIVE)
+        else:
+            self.iItemCreatedListBox.insert(tk.END, "Create a new item")
+            index = 0
+        
+        self.iItemCreatedListBox.activate(index)              
+        self.iItemNameLabelFrame.config(text=self.iItemCreatedListBox.index(tk.ACTIVE))
+            
+    def update_name(self,name):
+        if name:
+            if self.iItemCreatedListBox.index(0) == "Create a new item":
+                self.iItemCreatedListBox.delete(0,tk.END)
+            self.iItemCreatedListBox.insert(tk.END, name)
+            self.iItemNameLabelFrame.config(text=name)
+            
+    def clear_iitems(self):
+        self.iItemCreatedListBox.delete(0,tk.END)
+        self.iItemCreatedListBox.insert(tk.END, "Create a new item")
+        self.iItemNameLabelFrame.config(text="Create a new item")
+        
