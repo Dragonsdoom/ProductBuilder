@@ -36,5 +36,5 @@ class invItemFactory():
         this.subscribers.remove(subs)
 
     def notifySubscribers(self):
-        for s in subscribers:
+        for s in self.subscribers:
             s.updateInvItemFactory()

@@ -1,5 +1,6 @@
 import Tkinter as tk
 import ttk
+import inventoryItem
 
 class invItemView():
     root = tk.Tk()
@@ -40,10 +41,10 @@ class invItemView():
         self.iItemDeleteButton = ttk.Button(self.iItemCreatedLabelFrame,text='Delete', command=self.delete_iitem)
         self.iItemDeleteButton.grid(row=4, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        self.iItemLoadButton = ttk.Button(self.iItemCreatedLabelFrame,text='Load', command=None)
+        self.iItemLoadButton = ttk.Button(self.iItemCreatedLabelFrame,text='Load', command=self.load_iitems)
         self.iItemLoadButton.grid(row=5, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        self.iItemSaveButton = ttk.Button(self.iItemCreatedLabelFrame,text='Save', command=None)
+        self.iItemSaveButton = ttk.Button(self.iItemCreatedLabelFrame,text='Save', command=self.save_iitems)
         self.iItemSaveButton.grid(row=6, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
         self.iItemClearButton = ttk.Button(self.iItemCreatedLabelFrame,text='Clear', command=self.clear_iitems)
@@ -58,8 +59,9 @@ class invItemView():
         self.iItemTraitLabelFrame = ttk.LabelFrame(self.root,text="Traits")
         self.iItemTraitLabelFrame.grid(row=2, column=1, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
 
-        self.iItemTraitScrollbar = ttk.Scrollbar(self.iItemTraitLabelFrame,orient=tk.HORIZONTAL)
-        self.iItemTraitScrollbar.grid(row=0, column=0, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
+        self.trait_ui_collection = self.generate_product_trait_gui(inventoryItem.product(),self.iItemTraitLabelFrame)
+        for trait in self.trait_ui_collection:
+            trait.pack(padx=5, pady=5)
 
         self.iItemOptionLabelFrame = ttk.LabelFrame(self.root,text="Options")
         self.iItemOptionLabelFrame.grid(row=3, column=1, sticky=tk.W+tk.E+tk.N+tk.S, padx=5, pady=5)
@@ -106,4 +108,21 @@ class invItemView():
         self.iItemCreatedListBox.delete(0,tk.END)
         self.iItemCreatedListBox.insert(tk.END, "Create a new item")
         self.iItemNameLabelFrame.config(text="Create a new item")
+
+    def generate_trait_gui(self,guiparent,tname,value):
+        tlscale = ttk.LabeledScale(guiparent,from_=0,to=1)
+        tlscale.label.config(text=tname)
+        return tlscale
+
+    def generate_product_trait_gui(self, product, guiparent):
+        tlist = []
+        for tkey, tvalue in product.getTraits().items():
+            tlist.append(self.generate_trait_gui(guiparent,tkey,tvalue))
+        return tlist
+
+    def save_iitems(self):
+        pass
+
+    def load_iitems(self):
+        pass
         

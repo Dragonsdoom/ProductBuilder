@@ -18,7 +18,7 @@ class traitObject():
         self.description = desc
         
     def getTraits(self):
-        return traits
+        return self.traits
         
     def updateTraitList(self,traitDict):
         for k,v in traitDict.items():
